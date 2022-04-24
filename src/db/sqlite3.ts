@@ -1,39 +1,51 @@
 import { Database } from "sqlite3";
 import * as path from "path";
-
-console.log("sqlite3 call");
+import { resolve } from "path";
 
 const db_file_path = path.resolve(__dirname, '../../', 'sql_lite.db')
-console.log({ db_file_path })
+console.log("db_file_path: ", db_file_path);
 
-export const sqlite3_db = new Database(db_file_path, (err) => {
-    if (err) {
-      return console.error(err.message);
-    }
-    console.log('Connected to the in-memory SQlite database.');
+export let sqlite3_db: Database;
+export let db_status: string = '';
 
-    sqlite3_db.all(` PRAGMA TABLE_INFO(ttt) `, (err, rows) => {
-        if (err ) {
-            throw err;
-        }
-        console.log({rows})
+const createDBConnection = (): Promise<Database> => {
+    return new Promise((resolve, reject) => {
+        sqlite3_db = new Database(db_file_path, (error) => {
+            if (error) {
+                db_status = "Can't connect to DB";
+                reject(error);
+                return;
+            }
+            db_status = "Successfully connected to DB";
+            resolve(sqlite3_db);
+        });
     })
+}
 
-});
+const createTables = (): Promise<void> => {
+    return new Promise((resolve, reject) => {
+        sqlite3_db.run(
+            `CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                surname TEXT NOT NULL,
+                password TEXT NOT NULL,
+                email TEXT NOT NULL
+            );`,
+            (error) => {
+                if (error !== null) {
+                    reject(error);
+                    console.log('Error on User table create: ', error)
+                    return;
+                }
+            }
+        );
 
-sqlite3_db.run(
-    `CREATE TABLE IF NOT EXISTS users (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
-        surname TEXT NOT NULL,
-        pasword TEXT NOT NULL,
-        email TEXT NOT NULL
-    );`,
-    (error) => { console.log('error on user table create: ', error) }
-);
-// sqlite3_db.run(
-//     `ALTER TABLE users
-//         CREATE COLUMN IF NOT EXISTS 
-//     );`,
-//     (error) => { console.log('error on user table create: ', error) }
-// );
+        resolve();
+    })
+}
+
+export const initDB = async () => {
+    await createDBConnection();
+    await createTables();
+};

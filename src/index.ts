@@ -2,10 +2,15 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
-import { routes } from "./test_routes";
+import { db_status, initDB } from './db/sqlite3';
+import {routes} from "./test_routes";
 import {APP_HTTP_PORT} from "./config";
 
-console.log('app start !!!!!!')
+console.log('App started');
+
+initDB().finally(() => {
+    console.log('DB status: ', db_status);
+})
 
 const app = express();
 
@@ -16,11 +21,9 @@ app.use(cors());
 
 app.use(express.static('public'))
 
-// create user 
-// login user 
 
 // get products
-// create proguct 
+// create proguct
 
 // create order -> email user -> amdin order ->
 

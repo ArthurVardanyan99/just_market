@@ -1,26 +1,39 @@
+import * as crypto from 'crypto';
 import { sqlite3_db } from "./sqlite3";
 
 interface UserCreateArgs {
     email: string;
-    passowrd: string;
+    password: string;
     name: string;
     surname: string;
 }
 
-export function userCreate(args: UserCreateArgs) {
+export const userCreate = (args: UserCreateArgs) => {
     const {
         email,
         name,
-        passowrd,
+        password,
         surname,
     } = args;
 
-    console.log('db user create call', args);
+    return new Promise((resolve, reject) => {
+        const password_hash =
+        crypto.createHash('sha256').update(password).digest('hex');
 
-    sqlite3_db.run(
-        `INSERT INTO users (name, surname, pasword, email)
-        VALUES("${name}", "${surname}", "${passowrd}", "${email}");`,
-        (error) => { console.log('error on NEW user create: ', error) }
-    )
+        console.log({ password_hash })
 
+        console.log('db user create call', args);
+
+        sqlite3_db.run(
+            `INSERT INTO users (name, surname, password, email)
+            VALUES("${name}", "${surname}", "${password_hash}", "${email}");`,
+            (error) => {
+                if (error === null) {
+                    resolve(args);
+                } else {
+                    reject(error);
+                }
+            }
+        );
+    });
 }
