@@ -1,0 +1,625 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: Monserrat;
+}
+
+@font-face {
+    font-family: Monserrat;
+    src: url(../../Fonts/Montserrat/static/Montserrat-Regular.ttf);
+}
+
+#checked {
+    color: blue;
+}
+
+header {
+    background-color: rgb(218, 221, 221);
+    height: 8vh;
+    display: flex;
+    position: sticky;
+    top: 0;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 90px;
+    z-index: 9;
+}
+
+.logo a {
+    font-size: x-large;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+}
+
+.logo span {
+    color: rgb(104, 104, 173);
+}
+
+.navigation a {
+    padding: 0 24px;
+    font-size: 15px;
+    font-weight: bolder;
+    color: rgb(63, 18, 18);
+}
+
+.navigation a:hover {
+    color: blue;
+}
+
+#basket  {
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.intro {
+    display: flex;
+    justify-content: flex-end;
+    padding: 8px 16px;
+}
+
+.intro span {
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+#close_search {
+    border: none;
+    color: red;
+    font-size: 16px;
+    background-color: white;
+    font-weight: bolder;
+    width: 10px;
+    cursor: pointer;
+    display: none;
+}
+
+#search input {
+    display: none;
+}
+
+#container {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 888;
+    display: none;
+}
+
+#login_section {
+    width: 450px;
+    height: 500px;
+    position: fixed;
+    left: calc(50% - 225px);
+    top: calc(50vh - 220px);
+    background-color: rgba(61, 116, 148, 0.767);
+    color: mistyrose;
+    font-size: 20px;
+    z-index: 999;
+    border-radius: 50px;
+    display: none;
+}
+
+#reg_section {
+    width: 500px;
+    height: max-content;
+    position: fixed;
+    left: calc(50% - 250px);
+    top: 50px;
+    background-color: rgba(61, 116, 148, 0.767);
+    color: mistyrose;
+    z-index: 999;
+    border-radius: 50px;
+    display: none;
+}
+
+#login_section form {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 40px;
+}
+
+#reg_section form {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 40px;
+}
+
+#login_section form input {
+    margin: 20px 0;
+    padding: 8px;
+    width: 50%;
+    border: none;
+}
+
+#basket  {
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.total {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#popUp {
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    z-index: 999;
+    display: none;
+}
+
+#basket_pop_up h2 {
+    text-align: center;
+}
+
+#list {
+    width: 100%;
+    min-height: 65vh;
+    background-color: rgb(112, 158, 172);
+    overflow-y: scroll;
+    padding: 5px 10px;
+}
+
+#list_head {
+
+    height: 40px;
+    border: 2px solid black;
+}
+
+#list_head span {
+    border: 2px solid black;
+    padding: 10px;
+}
+
+#list div {
+    
+    background-color: rgb(188, 204, 204);
+    margin: 5px 0;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+#basket_pop_up {
+    width: 30%;
+    height: 86.5vh;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 14vh;
+    right: -30%;
+    z-index: 9999;
+    background-color: aliceblue;
+    justify-content: space-between;
+    padding: 10px;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes bascetPopUpOn {
+    100%{
+        right: 0;
+    }
+}
+
+@keyframes bascetPopUpOff {
+    0% {
+        right: 0;
+    }
+
+    100% {
+        right: -30%;
+    }
+}
+
+#to_buy {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+#buy {
+    padding: 3px 25px;
+    border: none;
+    background-color: rgb(131, 210, 255);
+    font-size: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+}
+
+#buy:hover {
+    background-color: rgb(109, 174, 231);
+}
+
+/* 
+.goog-te-combo> {
+    display: none;
+} */
+
+/* #google_translate_element {
+
+}
+.goog-te-combo {
+    display: block;
+} */
+#reg_section form input {
+    margin: 10px 0;
+    padding: 5px 8px;
+    width: 50%;
+}
+
+#reg_section form div {
+    display: flex;
+    width: 50%;
+    background-color: white;
+    align-items: center;
+    margin: 10px 0;
+}
+
+#reg_section form div input {
+    width: 100%;
+    border: none;
+    outline: none;
+    margin: 0;
+}
+
+#eye {
+    color: rgb(107, 107, 107);
+    padding-right: 8px;
+}
+
+#iffalse {
+    color: red;
+    padding-right: 8px;
+    font-size: 12px;
+    display: none;
+}
+
+#iftrue {
+    color: chartreuse;
+    padding-right: 8px;
+    font-size: 12px;
+    display: none;
+}
+
+#login_section h2 {
+    margin-bottom: 50px ;
+}
+
+#reg_section h2 {
+    margin-bottom: 20px ;
+}
+
+.or {
+    margin: 10px 0;
+}
+
+#login, #create1 {
+    margin-top: 10px;
+    padding: 8px 15px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#login:hover, #create1:hover {
+    background-color: rgb(41, 126, 175);
+    color: white;
+}
+
+#create, #login1 {
+    height: 20px;
+    font-size: 18px;
+    font-weight: bolder;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    color: rgb(253, 253, 253);
+
+}
+
+#exit1,#exit2,.exit3 {
+    color: rgb(190, 30, 30);
+    margin-left: auto;
+    font-size: 30px;
+    font-weight: bolder;
+    cursor: pointer;
+}
+
+.goog-te-gadget-simple img {
+    display: none;
+}
+.goog-te-banner {
+    display: none;
+}
+.goog-te-banner-frame{
+    display: none;
+}
+
+footer {
+    width: 100%;
+    height: 100px;
+    background-color: rgb(44, 45, 59);
+    
+}
+
+.foot1 {
+    display: flex;
+    padding: 20px 50px;
+    justify-content: space-between;
+    align-items: center;
+    color: rgb(252, 252, 252);
+}
+
+
+footer h2 span {
+    color: rgb(104, 104, 173);
+}
+
+.contact a {
+    color: white;
+    font-size: 30px;
+    margin-right: 40px;
+}
+
+
+
+.catalog {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+}
+
+.menu_nav {
+    width: 20%;
+    height: 100vh;
+    background-color: rgb(75, 143, 182);
+}
+
+
+.but a {
+
+    margin-bottom: 20px ;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0);
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 1s;
+}
+
+.but a:hover {
+
+    background-color: white;
+    color: rgb(41, 126, 175);
+
+}
+
+.but {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    top: 25vh;
+    left: 50px;
+
+}
+
+.main {
+
+    width: 80%;
+    height: 100vh;
+    background-color: rgb(255, 255, 255);
+    position: relative;
+
+}
+
+
+
+
+#fastfood_div {
+    
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+}
+
+#hotmeals_div, #seafood_div, #salades_div, #sweets_div, #drinks_div {
+
+    display: none;
+    flex-wrap: wrap;
+    padding: 10px;
+}
+
+/* .food1, .food2 {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+
+} */
+
+.block_div{
+    width: 25%;
+    /* height: 300px; */
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+}
+
+.bagroundImage_div {
+    width: 200px;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 5px;
+    -webkit-box-shadow: 15px 18px 16px 2px rgba(0, 0, 0, 0.36);
+    -moz-box-shadow: 15px 18px 16px 2px rgba(0, 0, 0, 0.36);
+    box-shadow: 15px 18px 16px 2px rgba(0, 0, 0, 0.36);
+}
+
+.info_div {
+    width: 100%;
+    text-align: center;
+    font-family:Arial, Helvetica, sans-serif;
+    padding: 15px 5px;
+}
+.plus_minus {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 10px 7px;
+}
+.add_food_btn {
+    width: 45%;
+    /* margin: 8px 10px; */
+    padding: 5px 3px; 
+    border: none;
+    border-radius: 3px;
+    color: black;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.5s;
+    background-color: rgb(89, 188, 201);
+}
+
+.info_div input {
+    width: 15%;
+    /* margin: 8px 5px; */
+    padding: 1px;
+    border: 1px solid black;
+    border-radius: 3px;
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    text-align: center;
+    transition: 0.5s;
+    background-color: rgb(255, 255, 255);
+} 
+
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+#plus, #minus {
+
+    border: none;
+    color: black;
+    cursor: pointer;
+    font-weight: bolder;
+    font-size: 25px;
+    background-color: transparent;
+}
+
+.add_food_btn:hover {
+
+    background-color: rgb(53, 115, 230);
+    color: white;
+}
+
+/* 
+#hotmeals1, #hotmeals2, #hotmeals3, #hotmeals4, #hotmeals5, #hotmeals6, #hotmeals7, #hotmeals8 {
+    width: 200px;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+
+}
+
+#hotmeals1 {
+    background-image: url("/Images/menu/hotmeals/dolma.png");
+}
+
+#hotmeals2 {
+    background-image: url("/Images/menu/hotmeals/ramen.png");
+}
+
+#hotmeals3 {
+    background-image: url("/Images/menu/hotmeals/spagetti.png");
+}
+
+#hotmeals4 {
+    background-image: url("/Images/menu/hotmeals/uzbekeken\ plav.png");
+}
+
+#hotmeals5 {
+    background-image: url("/Images/menu/hotmeals/qyabab.png");
+}
+
+#hotmeals6 {
+    background-image: url("/Images/menu/hotmeals/xrovac.png");
+}
+
+#hotmeals7 {
+    background-image: url("/Images/menu/hotmeals/steyk.png");
+}
+#hotmeals8 {
+    background-image: url("/Images/menu/hotmeals/sup.png");
+}
+
+#seafood1, #seafood2, #seafood3, #seafood4, #seafood5, #seafood6, #seafood7, #seafood8 {
+    width: 200px;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+
+}
+
+#seafood1 {
+    background-image: url("/Images/menu/seafood/jarit\ dzuk.png");
+}
+
+#seafood2 {
+    background-image: url("/Images/menu/seafood/dzuk.png");
+}
+
+#seafood3 {
+    background-image: url("/Images/menu/seafood/ikra.jpg");
+}
+
+#seafood4 {
+    background-image: url("/Images/menu/seafood/rak.png");
+}
+
+#seafood5 {
+    background-image: url("/Images/menu/seafood/crabe.jpg");
+}
+
+#seafood6 {
+    background-image: url("/Images/menu/seafood/ustrica.jpg");
+}
+
+#seafood7 {
+    background-image: url("/Images/menu/seafood/asminog.jpg");
+}
+#seafood8 {
+    background-image: url("/Images/menu/seafood/krivetka.png");
+} */

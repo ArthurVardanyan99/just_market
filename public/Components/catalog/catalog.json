@@ -1,0 +1,19 @@
+{
+    "products" : [
+        {
+            "productId" : 1,
+            "productUrl" : "../../Images/menu/fastfood/burger.png",
+            "productName" : "Burger",
+            "productPrice" : "2500",
+            "productType" : "fast_food"
+        },
+
+        {
+            "productId" : 2,
+            "productUrl" : "Images/menu/fastfood/hotfdog.jpg",
+            "productName" : "Hot-Dog",
+            "productPrice" : "4500",
+            "productType" : "fast_food"
+        }
+    ]
+}
