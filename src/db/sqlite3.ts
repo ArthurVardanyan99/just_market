@@ -41,6 +41,23 @@ const createTables = (): Promise<void> => {
             }
         );
 
+        sqlite3_db.run(
+            `CREATE TABLE IF NOT EXISTS products (
+                productId INTEGER PRIMARY KEY AUTOINCREMENT,
+                productUrl TEXT NOT NULL,
+                productName TEXT NOT NULL,
+                productPrice TEXT NOT NULL,
+                productType TEXT NOT NULL
+            );`,
+            (error) => {
+                if (error !== null) {
+                    reject(error);
+                    console.log('Error on Products table create: ', error)
+                    return;
+                }
+            }
+        );
+
         resolve();
     })
 }

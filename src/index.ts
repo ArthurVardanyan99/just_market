@@ -32,6 +32,9 @@ app.get('/', routes.home)
 app.post('/user/create', routes.userCreate);
 app.post('/user/login', routes.userLogin);
 
+app.post('/product/create', routes.createProduct);
+app.get('/product/list', routes.getProducts);
+
 app.get("*", routes.not_found)
 
 // app.listen(Number(APP_HTTP_PORT), '0.0.0.0', () => {
