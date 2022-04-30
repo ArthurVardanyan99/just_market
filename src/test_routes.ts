@@ -48,8 +48,24 @@ const routes = {
     try {
       console.log('product get data query: ', req.query);
       const type = req.query.type as string;
-      const products = await productGet({ type });
+      const products = await productGet({ type, id: undefined });
       res.json(products);
+      // @ts-ignore
+    } catch (error) {
+      console.log('getProducts error: ', error)
+    }
+    res.end();
+  },
+
+  getProductsById: async (req: Request, res: Response) => {
+    try {
+      console.log('product get data by id: ', req.params);
+      const id = Number(req.params.id)
+      
+      // const type = req.query.type as string;
+      const products = await productGet({ type: undefined, id });
+      // @ts-ignore
+      res.json(products[0]);
       // @ts-ignore
     } catch (error) {
       console.log('getProducts error: ', error)

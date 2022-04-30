@@ -23,7 +23,7 @@
                 <span id="exit1"><i class="fa-solid fa-x"></i></span>
                 <h2>Login to your account</h2>
                 <label for="username">Login</label>
-                <input type="email" autocomplete="off" id="username" placeholder="Username">
+                <input type="email" autocomplete="off" id="username" placeholder="Email">
                 <label for="password">Password</label>
                 <input type="password" id="password" placeholder="Password" autocomplete="off">
                 <button id="login">Log In</button>
@@ -63,14 +63,19 @@
             <span class="exit3"><i id="exit3" class="fa-solid fa-x"></i></span>
             <h2> Your Shopping </h2>
             <div id="list">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
+                <table id="basket_table">
+                    <thead>
+                        <td>Name</td>
+                        <td>Price</td>
+                        <td>Count</td>
+                        <td>Sum</td>
+                        <td>Remove</td>
+                    </thead>
+                    <tbody id="basket_table_body">
+
+                    </tbody>
+                </table>
+
             </div>
             <div id="to_buy">
                 <button id="buy">Buy</button>
@@ -86,6 +91,7 @@
            
             <span id="search"> <input type="text" id="search_input"> <span id="search_but"> <span><i class="fas fa-search"></i></span> SEARCH </span> <button id="close_search"> X </button> </span>
             <span id="my_account"> <span><i class="fas fa-user-circle"></i></span> MY ACCOUNT</span>
+            <span id="log_out">LogOut</span>
             <div  id="google_translate_element"></div>
         </div>
         <header>
@@ -98,10 +104,10 @@
             <div id="basket">
                 <span> <i class="fas fa-shopping-cart"></i> </span>
                 <span>My basket</span>
-                <span>(0)</span>
+                <span>(<span id="basket_count">0</span>)</span> 
             </div>
         </header>
-        
+        <!-- 077343391 -->
         <div id="blur">
             <section class="home_slider" id="home_slider">
                 <div id="prev"> <i class="fas fa-chevron-left"> </i> </div>

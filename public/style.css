@@ -77,18 +77,33 @@ header {
 #list {
     width: 100%;
     min-height: 65vh;
-    background-color: aqua;
+    background-color: rgb(112, 158, 172);
     overflow-y: scroll;
     padding: 5px 10px;
 }
+thead td {
+    padding: 5px;
+}
+#basket_table {
+    border: 1px solid black;
+    width: 100%;
+}
+#basket_table th,#basket_table td  {
+    border: 1px solid black;
+    width: 100%;
+    text-align: center;
+    padding: 5px;
+}
+
 
 #list div {
     
-    height: 80px;
     background-color: rgb(188, 204, 204);
     margin: 5px 0;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
 }
-
 #basket_pop_up {
     width: 30%;
     height: 86.5vh;

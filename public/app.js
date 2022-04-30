@@ -72,3 +72,6 @@ my_account_click();
  buy.addEventListener("click", ()=> {
     window.location.href = './Components/SaleForm/SaleForm.html';
 })
+
+import {renderBasketItems} from "./Components/catalog/catalog.js";
+renderBasketItems();

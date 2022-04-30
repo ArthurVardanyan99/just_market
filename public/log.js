@@ -1,16 +1,32 @@
 let my_account = document.getElementById(`my_account`);
 let login_section = document.getElementById(`login_section`);
 let reg_section = document.getElementById(`reg_section`);
-let exit1 = document.getElementById(`exit1`)
-let exit2 = document.getElementById(`exit2`)
-let create = document.getElementById(`create`)
-let container = document.getElementById(`container`)
-let login1 = document.getElementById(`login1`)
+let exit1 = document.getElementById(`exit1`);
+let exit2 = document.getElementById(`exit2`);
+let create = document.getElementById(`create`);
+let container = document.getElementById(`container`);
+let login1 = document.getElementById(`login1`);
+let username = document.getElementById(`username`);
+let password = document.getElementById(`password`);
+let login = document.getElementById(`login`);
+let log_out = document.getElementById(`log_out`);
+let iffalse = document.getElementById(`iffalse`);
+let iftrue = document.getElementById(`iftrue`);
 
 
-    let iffalse = document.getElementById(`iffalse`);
-    let iftrue = document.getElementById(`iftrue`);
-    
+
+let saved_user_name = localStorage.getItem("user_name");
+if(saved_user_name) {
+   my_account.innerText = saved_user_name;
+}
+
+log_out.addEventListener("click", () => {
+    localStorage.setItem("user_id","");
+    localStorage.setItem("user_name","");
+    my_account.innerText = 'MY ACCOUNT';
+    // localStorage.clear
+})
+
 function my_account_click () {
     my_account.addEventListener(`click`, () => {
         container.style.display = `block`;
@@ -80,15 +96,70 @@ function my_account_click () {
         event.preventDefault()
 
         if (first_name_regex.test(first_name.value) && first_name_regex.test(last_name.value) && email_regex.test(email.value) && password_validation.test(password1.value) && repeat_pass.value === password1.value ) {
-            alert("You create your account");
-            first_name.value = ``;
-            last_name.value = '';
-            email.value = '';
-            repeat_pass.value ='';
-            password1.value = '';
-            
+            fetch('/user/create',{
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(
+                    {
+                        email: email.value,
+                        password: password1.value,
+                        name: first_name.value,
+                        surname: last_name.value
+                    }
+                ),
+            })
+            .then(response => {
+                alert("You create your account");
+                first_name.value = ``;
+                last_name.value = '';
+                email.value = '';
+                repeat_pass.value ='';
+                password1.value = '';
+            })
+            .catch( error => {
+                console.log(error)
+                alert("Something went wrong");
+            })
+
         }
     
+    })
+
+    login.addEventListener(`click`, (event) => {
+        event.preventDefault()
+            fetch('/user/login',{
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(
+                    {
+                        email: username.value,
+                        password: password.value,
+                    }
+                ),
+            })
+            .then(response => response.json())
+            .then(result =>{
+                localStorage.setItem("user_id",result.id);
+                localStorage.setItem("user_name",result.name);
+                my_account.innerText = result.name;
+                username.value ='';
+                password.value = '';
+                container.style.display = `none`;
+                login_section.style.display = `none`;
+                document.body.style.overflow = `scroll`;
+                document.getElementById(`blur`).style.filter = `none`;
+
+            })
+            .catch( error => {
+                console.log(error)
+                alert("Something went wrong");
+            })
     })
     
     let eye = document.getElementById`eye`
