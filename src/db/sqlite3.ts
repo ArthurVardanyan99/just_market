@@ -58,6 +58,23 @@ const createTables = (): Promise<void> => {
             }
         );
 
+        sqlite3_db.run(
+            `CREATE TABLE IF NOT EXISTS orders (
+                orderId INTEGER PRIMARY KEY AUTOINCREMENT,
+                userId INT NOT NULL,
+                createDate INT NOT NULL,
+                productIds TEXT NOT NULL,
+                completed INT
+            );`,
+            (error) => {
+                if (error !== null) {
+                    reject(error);
+                    console.log('Error on Orders table create: ', error)
+                    return;
+                }
+            }
+        );
+
         resolve();
     })
 }

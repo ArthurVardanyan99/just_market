@@ -1,6 +1,9 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import path from "path";
+import fs from "fs";
+import multer from "multer";
 
 import { db_status, initDB } from './db/sqlite3';
 import {routes} from "./test_routes";
@@ -11,6 +14,10 @@ console.log('App started');
 initDB().finally(() => {
     console.log('DB status: ', db_status);
 })
+
+const upload = multer({
+    dest: path.resolve(__dirname, "../public/tmp"),
+});
 
 const app = express();
 
@@ -36,11 +43,38 @@ app.post('/product/create', routes.createProduct);
 app.get('/product/list/:id', routes.getProductsById);
 app.get('/product/list', routes.getProducts);
 
+app.post('/order/create', routes.createOrder);
+app.get('/order/list/:id?', routes.getOrders);
+app.get('/order/complete/:id', routes.completeOrder);
 
+app.post("/upload",
+    upload.single("file"),
+    (req: Request, res: Response) => {
+        if (!req.file) {
+            res.end()
+            return;
+        }
+
+        const tempPath = req.file && req.file.path;
+        const targetPath =
+            path.join(__dirname, `../public/Images/${req.file.originalname}`);
+
+        console.log({ targetPath, tempPath })
+
+        fs.rename(tempPath, targetPath, err => {
+            if (err) {
+                res.status(404);
+                res.end();
+                return;
+            }
+        });
+
+        res.end(`File uploaded, name: ${req.file.originalname}`, )
+    }
+);
 
 app.get("*", routes.not_found)
 
-// app.listen(Number(APP_HTTP_PORT), '0.0.0.0', () => {
 app.listen(APP_HTTP_PORT, () => {
     console.log(`started on ${APP_HTTP_PORT}, http://localhost:${APP_HTTP_PORT}`);
 });

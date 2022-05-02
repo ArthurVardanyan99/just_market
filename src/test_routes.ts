@@ -1,10 +1,15 @@
-
-import path from "path";
 import {Request, Response} from "express"
-import { userCreate } from './db/userCreate';
-import { loginUser } from './db/loginUser';
-import { productCreate } from './db/productCreate';
-import { productGet } from './db/productGet';
+import {
+  userCreate,
+  loginUser,
+  productCreate,
+  productGet,
+  orderCreate,
+  ordersGet,
+  ordersComplete,
+} from './db';
+
+
 
 
 const routes = {
@@ -61,7 +66,7 @@ const routes = {
     try {
       console.log('product get data by id: ', req.params);
       const id = Number(req.params.id)
-      
+
       // const type = req.query.type as string;
       const products = await productGet({ type: undefined, id });
       // @ts-ignore
@@ -69,6 +74,67 @@ const routes = {
       // @ts-ignore
     } catch (error) {
       console.log('getProducts error: ', error)
+    }
+    res.end();
+  },
+
+  createOrder: async (req: Request, res: Response) => {
+    console.log('createOrder: body', req.body);
+    try {
+      await orderCreate(req.body);
+    } catch (error) {
+      console.log('createOrder error: ', error);
+    }
+    res.end();
+  },
+
+  getOrders: async (req: Request, res: Response) => {
+    console.log('getOrders', req.query);
+    try {
+      const {
+        completed,
+      } = req.query;
+      const {
+        id,
+      } = req.params;
+
+      let com: undefined | boolean = undefined;
+      if (completed === 'true') {
+        com = true;
+      } else if (completed === 'false') {
+        com = false;
+      }
+
+      const orders = await ordersGet({
+        completed: com,
+        userId: (id && Number(id)) || undefined,
+      });
+      console.log('orders get data query: ', req.query);
+      res.json(orders);
+    } catch (error) {
+      console.log('createOrder getOrders: ', error);
+    }
+    res.end();
+  },
+
+
+  completeOrder: async (req: Request, res: Response) => {
+    console.log('completeOrder', req.query);
+    try {
+      const {
+        id,
+      } = req.params;
+
+      const o_id = Number(id);
+      if (!o_id) {
+        throw new Error('incorrect order id');
+      }
+
+      await ordersComplete({
+        orderId: o_id,
+      });
+    } catch (error) {
+      console.log('createOrder getOrders: ', error);
     }
     res.end();
   },
