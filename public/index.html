@@ -57,6 +57,17 @@
                 <button id="login1">Log In</button>
             </form>
         </section>
+        <section id="order_section">
+            <form action="" method="post">
+                <span id="exit4"><i class="fa-solid fa-x"></i></span>
+                <h2>Order</h2>
+                <label for="phone">Phone number</label>
+                <input type="tel" autocomplete="off" id="phone" placeholder="Phone">
+                <label for="address">Address</label>
+                <input type="text" id="address" placeholder="Address" autocomplete="off">
+                <button id="order">Order</button>
+            </form>
+        </section>
     </section>
     <section id="popUp">
         <section id="basket_pop_up" class="basket_pop_up">
@@ -81,7 +92,7 @@
                 <button id="buy">Buy</button>
                 <section class="total">
                     <p>Total price</p>
-                    <p>0</p>
+                    <p id="totalPrice">0</p>
                 </section>
             </div>
         </section>
@@ -107,7 +118,7 @@
                 <span>(<span id="basket_count">0</span>)</span> 
             </div>
         </header>
-        <!-- 077343391 -->
+   
         <div id="blur">
             <section class="home_slider" id="home_slider">
                 <div id="prev"> <i class="fas fa-chevron-left"> </i> </div>

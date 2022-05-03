@@ -93,8 +93,17 @@ thead td {
     width: 100%;
     text-align: center;
     padding: 5px;
+    color: white;
 }
 
+.basket_prod_count_value {
+    width: 20px;
+    background-color: transparent;
+    border: none;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+}
 
 #list div {
     
@@ -104,6 +113,7 @@ thead td {
     justify-content: space-evenly;
     align-items: center;
 }
+
 #basket_pop_up {
     width: 30%;
     height: 86.5vh;
@@ -404,7 +414,7 @@ footer h2 span {
 
 }
 
-#exit1,#exit2,.exit3 {
+#exit1,#exit2,.exit3, #exit4 {
     color: rgb(190, 30, 30);
     margin-left: auto;
     font-size: 30px;
@@ -412,3 +422,36 @@ footer h2 span {
     cursor: pointer;
 }
 
+#order_section h2 {
+    margin-bottom: 50px ;
+}
+
+#order_section {
+    width: 450px;
+    height: 400px;
+    position: fixed;
+    left: calc(50% - 225px);
+    top: calc(50vh - 200px);
+    background-color: rgba(61, 116, 148, 0.767);
+    color: mistyrose;
+    font-size: 20px;
+    z-index: 999;
+    border-radius: 50px;
+    display: none;
+}
+#order_section form {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 40px;
+}
+#order_section form input {
+    margin: 20px 0;
+    padding: 8px;
+    width: 50%;
+    border: none;
+}

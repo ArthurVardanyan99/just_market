@@ -1,3 +1,5 @@
+import nodemailer from 'nodemailer';
+
 import {Request, Response} from "express"
 import {
   userCreate,
@@ -7,9 +9,19 @@ import {
   orderCreate,
   ordersGet,
   ordersComplete,
+  createEmailText,
 } from './db';
 
 
+let transport = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
+  auth: {
+    user: 'justmarket11@gmail.com',
+    pass: 'justmarket2022',
+  }
+});
 
 
 const routes = {
@@ -81,7 +93,25 @@ const routes = {
   createOrder: async (req: Request, res: Response) => {
     console.log('createOrder: body', req.body);
     try {
-      await orderCreate(req.body);
+      const inserted_order_id = await orderCreate(req.body);
+      const text = await createEmailText(inserted_order_id);
+      console.log('email text: ', text);
+
+      const mailOptions = {
+        from: 'justmarket11@gmail.com', // Sender address
+        to: 'arthurvardanyan044000@gmail.com', // List of recipients
+        subject: 'New Order', // Subject line
+        text: 'Hello People!, Welcome to Bacancy!', // Plain text body
+      };
+
+      transport.sendMail(mailOptions, function(err, info) {
+          if (err) {
+            console.log('email err: ', err)
+          } else {
+            console.log('email ok', info);
+          }
+      });
+
     } catch (error) {
       console.log('createOrder error: ', error);
     }

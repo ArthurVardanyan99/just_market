@@ -9,8 +9,26 @@
     <title>Document</title>
 </head>
 <body>
-    <div>
-        <input type="file" id="prodUrl">
-    </div>
+    <main>
+        <div class="inputs_div">
+            <label for="prodUrl">Product Image Path</label>
+            <input type="text" id="prodUrl" value="../../Images/menu/">
+            <label for="prodName">Product Name</label>
+            <input type="text" id="prodName">
+            <label for="prodPrice">Product Price</label>
+            <input type="text" id="prodPrice">
+            <label for="prodType">Product Type</label>
+            <select name="prodType" id="prodType">
+                <option value="fast_food">fast_food</option>
+                <option value="hot-meals">hot-meals</option>
+                <option value="sea-food">sea-food</option>
+                <option value="salades">salades</option>
+                <option value="sweets">sweets</option>
+                <option value="drinks">drinks</option>
+            </select>
+            <button id="add">Add to base</button>
+        </div>
+    </main>
+    
 </body>
 </html>

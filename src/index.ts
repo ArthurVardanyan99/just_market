@@ -9,10 +9,16 @@ import { db_status, initDB } from './db/sqlite3';
 import {routes} from "./test_routes";
 import {APP_HTTP_PORT} from "./config";
 
+import {
+    createEmailText,
+  } from './db';
+
 console.log('App started');
 
 initDB().finally(() => {
     console.log('DB status: ', db_status);
+      
+      createEmailText(9)
 })
 
 const upload = multer({

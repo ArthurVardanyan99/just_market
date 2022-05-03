@@ -64,7 +64,9 @@ const createTables = (): Promise<void> => {
                 userId INT NOT NULL,
                 createDate INT NOT NULL,
                 productIds TEXT NOT NULL,
-                completed INT
+                completed INT,
+                address TEXT,
+                phone_number TEXT NOT NULL
             );`,
             (error) => {
                 if (error !== null) {

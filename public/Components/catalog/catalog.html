@@ -46,24 +46,11 @@
                     <button id="buy">Buy</button>
                     <section class="total">
                         <p>Total price</p>
-                        <p>5000</p>
+                        <p id="totalPrice">0</p>
                     </section>
                 </div>
             </section>
         </section>
-        <header>
-            <div class="logo" > <a href="../../index.html" translate="no"><span>Just </span>Market</a>  </div>
-            <div class="navigation"> 
-                <a href="../../index.html">HOME</a>
-                <a href="#" id="checked">CATALOG</a>
-                <a href="../../index.html#map">CONTACT US</a>
-            </div>
-            <div id="basket">
-                <span> <i class="fas fa-shopping-cart"></i> </span>
-                <span >My basket</span>
-                <span>(<span id="basket_count">0</span>)</span> 
-            </div>
-        </header>
         <section id="container">
             <section id="login_section">
                 <form action="" method="post">
@@ -104,7 +91,34 @@
                     <button id="login1">Log In</button>
                 </form>
             </section>
+
+            <section id="order_section">
+                <form action="" method="post">
+                    <span id="exit4"><i class="fa-solid fa-x"></i></span>
+                    <h2>Order</h2>
+                    <label for="phone">Phone number</label>
+                    <input type="tel" autocomplete="off" id="phone" placeholder="Phone">
+                    <label for="address">Address</label>
+                    <input type="text" id="address" placeholder="Address" autocomplete="off">
+                    <button id="order">Order</button>
+                </form>
+            </section>
+
         </section>
+        <header>
+            <div class="logo" > <a href="../../index.html" translate="no"><span>Just </span>Market</a>  </div>
+            <div class="navigation"> 
+                <a href="../../index.html">HOME</a>
+                <a href="#" id="checked">CATALOG</a>
+                <a href="../../index.html#map">CONTACT US</a>
+            </div>
+            <div id="basket">
+                <span> <i class="fas fa-shopping-cart"></i> </span>
+                <span >My basket</span>
+                <span>(<span id="basket_count">0</span>)</span> 
+            </div>
+        </header>
+        
         <section id="blur" class="catalog" >
            <nav class="menu_nav">
                <div class="but">

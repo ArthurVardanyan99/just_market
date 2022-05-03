@@ -1,0 +1,53 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+main {
+    width: 100%;
+    height: 100vh;
+    background-image: url(./Images/111111.webp);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.inputs_div {
+
+    width: 500px;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    position: fixed;
+    left: calc(50% - 250px);
+    top: 50px;
+
+}
+
+.inputs_div * {
+
+    margin: 2px;
+    padding: 10px 25px;
+}
+
+label {
+    font-size: 32px;
+    font-weight: bolder;
+    color: rgb(0, 0, 0);
+}
+
+input {
+    border: 2px solid black;
+}
+
+#add {
+
+    margin-top: 50px;
+    border: none;
+    background-color: aquamarine;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}

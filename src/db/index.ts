@@ -6,3 +6,4 @@ export * from './productGet';
 export * from './sqlite3';
 export * from './userCreate';
 export * from './ordersComplete';
+export * from './createEmailText';

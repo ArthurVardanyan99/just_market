@@ -21,10 +21,12 @@ if(saved_user_name) {
 }
 
 log_out.addEventListener("click", () => {
-    localStorage.setItem("user_id","");
-    localStorage.setItem("user_name","");
+    localStorage.removeItem("user_id");
+    localStorage.removeItem("user_name");
+    localStorage.removeItem("basket");
     my_account.innerText = 'MY ACCOUNT';
     // localStorage.clear
+    
 })
 
 function my_account_click () {
@@ -40,11 +42,8 @@ function my_account_click () {
         login_section.style.display = `none`;
         document.body.style.overflow = `scroll`;
         document.getElementById(`blur`).style.filter = `none`;
-        first_name.value = ``;
-        last_name.value = '';
-        email.value = '';
-        repeat_pass.value ='';
-        password1.value = '';
+        username.value = ``;
+        password.value = '';
     }); 
 
     exit2.addEventListener(`click`, () => {

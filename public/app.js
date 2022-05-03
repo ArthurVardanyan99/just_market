@@ -65,13 +65,8 @@ import my_account_click from './log.js'
 my_account_click();
 
  /////////// Basket ///////////////////////////////
- let buy = document.getElementById("buy");
  import open_basket from './my_basket_popUp.js'
  open_basket();
-
- buy.addEventListener("click", ()=> {
-    window.location.href = './Components/SaleForm/SaleForm.html';
-})
 
 import {renderBasketItems} from "./Components/catalog/catalog.js";
 renderBasketItems();

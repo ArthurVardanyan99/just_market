@@ -23,6 +23,8 @@ let fastfood_but = document.getElementById(`fastfood_but`);
 let div_array = [hotmeals_div,seafood_div,salades_div,sweets_div,drinks_div,fastfood_div];
 let button_array = [hotmeals_but,seafood_but,salades_but,sweets_but,drinks_but,fastfood_but];
 
+let totalPrice = document.getElementById('totalPrice');
+
 
 ///////////////////// search //////////////////
 function initSearch() {
@@ -134,17 +136,12 @@ my_account_click();
 
 
  /////////// Basket ///////////////////////////////
-let buy = document.getElementById("buy");
 
 import open_basket from '../../my_basket_popUp.js'
 open_basket();
-function initBuy() {
-    buy.addEventListener("click", ()=> {
-        window.location.href = '../SaleForm/SaleForm.html';
-    })
-}
-initBuy()
 
+import orderComplete from '../../order.js';
+orderComplete();
 
 ////////////////// Filling menu///////////////////////
 
@@ -225,6 +222,7 @@ function renderProdocts() {
     
 try {
     renderProdocts();
+    countAndSetTotal();
 } catch (error) {
     
 }
@@ -235,12 +233,17 @@ function add_to_basket(event) {
     const curr_prod_id = event.target.getAttribute("data-prod-id");
     const count_input = document.querySelector(`[data-prod-count-id="${curr_prod_id}"]`)
     const product_count = Number(count_input.value);
-    fetch('/product/list/' + curr_prod_id) 
-    .then (response => response.json())
-    .then (result => {
-        addBasketItem({...result, count: product_count})
-        renderBasketItems();
-    });
+    if (product_count <= 0 ) {
+        return
+    } else {
+        fetch('/product/list/' + curr_prod_id) 
+        .then (response => response.json())
+        .then (result => {
+            addBasketItem({...result, count: product_count})
+            renderBasketItems();
+        });
+    }
+
 }
  function renderBasketItems() {
     let basket_table_body = document.getElementById('basket_table_body');
@@ -250,18 +253,27 @@ function add_to_basket(event) {
         basket_table_body.removeChild(basket_table_body.firstChild);
     }
     for(const key of basket_items) {
-        console.log(key.productName, key);
             const basket_prod_tr = document.createElement('tr');
             const basket_prod_name = document.createElement('td');
             basket_prod_name.innerText = key.productName;
             const basket_prod_price = document.createElement('td');
             basket_prod_price.innerText = key.productPrice;
             const basket_prod_count = document.createElement('td');
-            basket_prod_count.innerText = key.count;
+            // basket_prod_count.style.backgroundColor = "rgb(169, 217, 231)";
+            const basket_prod_count_value = document.createElement('input');
+            basket_prod_count_value.type = "number";
+            basket_prod_count_value.value = key.count;
+            basket_prod_count_value.setAttribute('productId', key.productId);
+            basket_prod_count_value.addEventListener('keyup', updateBasketCount);
+            basket_prod_count_value.className = "basket_prod_count_value"
+            basket_prod_count.appendChild(basket_prod_count_value);
             const basket_prod_sum = document.createElement('td');
-            basket_prod_sum.innerText = Number(basket_prod_price.innerText) * Number(basket_prod_count.innerText);
+            basket_prod_sum.innerText = Number(basket_prod_price.innerText) * basket_prod_count_value.value;
+            basket_prod_sum.setAttribute('productSum', key.productId);
             const basket_prod_dell = document.createElement('td');
             basket_prod_dell.innerText = "X";
+            basket_prod_dell.setAttribute('removeProd', key.productId);
+            basket_prod_dell.addEventListener('click', removeProduct);
             basket_prod_dell.style.color = 'red';
             basket_prod_dell.style.cursor = "pointer";
             basket_prod_tr.appendChild( basket_prod_name);
@@ -270,9 +282,40 @@ function add_to_basket(event) {
             basket_prod_tr.appendChild( basket_prod_sum);
             basket_prod_tr.appendChild( basket_prod_dell);
             basket_table_body.appendChild(basket_prod_tr);
+
     }
-    // basket_count.innerText = basket_items.length;
     document.getElementById('basket_count').innerText = basket_items.length;
+}
+
+function removeProduct () {
+    let basket_items = getBasketItems();
+    let removeElementId = Number(this.getAttribute('removeProd'));
+    basket_items = basket_items.filter( value => value.productId !== removeElementId)
+    localStorage.setItem('basket', JSON.stringify(basket_items));
+    renderBasketItems();
+    countAndSetTotal();
+}
+////////////////////////////
+function updateBasketCount() {
+    
+    let inputValue = Number(this.value);
+    let productId = Number(this.getAttribute("productId"));
+    let productSum = document.querySelector(`[productSum="${productId}"]`);
+    if (inputValue < 1) {
+        this.value = 1;
+    } else {
+        let basket_items = getBasketItems();
+        for (let pr of basket_items) {
+            if (pr.productId === productId) {
+                pr.count = inputValue;
+                productSum.innerText = pr.count * Number(pr.productPrice);
+            }
+        }
+
+        localStorage.setItem('basket', JSON.stringify(basket_items));
+        countAndSetTotal();
+
+    }
 }
 
 function addBasketItem(new_prodcut) {
@@ -305,5 +348,13 @@ function getBasketItems() {
     }
 }
 
+function countAndSetTotal() {
+    const basket_items = getBasketItems();
+    let localTotalPrice = 0;
+    for (let pr of basket_items) {
+        localTotalPrice += pr.count * Number(pr.productPrice);
+    }
+    totalPrice.innerText = localTotalPrice;
+}
 
-export {renderBasketItems}  
+export {renderBasketItems, getBasketItems}  
