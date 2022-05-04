@@ -4,6 +4,8 @@ import cors from "cors";
 import path from "path";
 import fs from "fs";
 import multer from "multer";
+import bodyParser from 'body-parser';
+
 
 import { db_status, initDB } from './db/sqlite3';
 import {routes} from "./test_routes";
@@ -18,7 +20,7 @@ console.log('App started');
 initDB().finally(() => {
     console.log('DB status: ', db_status);
       
-      createEmailText(9)
+    //   createEmailText(9)
 })
 
 const upload = multer({
@@ -28,6 +30,7 @@ const upload = multer({
 const app = express();
 
 app.use(express.urlencoded({ extended: false }))
+// app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors());

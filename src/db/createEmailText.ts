@@ -1,5 +1,5 @@
 import { sqlite3_db } from "./sqlite3";
-import { Order } from './types';
+import { Order, User } from './types';
 
 interface OrdersGetArgs {
     userId: number | undefined;
@@ -51,7 +51,7 @@ export const createEmailText = async (id: number): Promise<string> => {
 
     const user_id = order.userId;
 
-    const user: Order = await new Promise((resolve, reject) => {
+    const user: User = await new Promise((resolve, reject) => {
         sqlite3_db.get(
             `select * from users where id = ${user_id}`,
             (error, row) => {
@@ -67,31 +67,32 @@ export const createEmailText = async (id: number): Promise<string> => {
     console.log('createEmailText user : ', user);
 
     let total_price = 0;
+    let prod_desc = '';
 
     for (const p of products) {
         console.log('products: ', p);
         // @ts-ignore
         const {id: prod_id, count} = order.productIds.find(ids => ids.id === p.productId);
         console.log('data: ', {prod_id}, {count});
-
+        prod_desc +=  `Food Name:: ${p.productName} // Price:: ${p.productPrice}  |  (${count}) \n`;
         total_price += count * p.productPrice;
     }
 
     console.log('createEmailText total_price : ', total_price);
 
     return `
-        OrderID +
-        UserID +
-        UserName +
-        UserSurname +
-        UserEmail +
-        
-        UserPhone + 
-        UserAddress +
-        
-        ProductName
-        ProductPrice
-        ProductCount
-        TotalPrice
+Order ID: ${order_id}
+
+User ID: ${user_id}
+Name: ${user.name}
+Surname: ${user.surname}
+Email: ${user.email}
+
+Phone: ${order.phone_number}
+Address: ${order.address}
+
+${prod_desc}
+
+Total price: ${total_price}
     `;
 }

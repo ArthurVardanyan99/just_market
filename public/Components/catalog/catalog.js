@@ -25,6 +25,8 @@ let button_array = [hotmeals_but,seafood_but,salades_but,sweets_but,drinks_but,f
 
 let totalPrice = document.getElementById('totalPrice');
 
+let search_section = document.getElementById(`search_section`);
+
 
 ///////////////////// search //////////////////
 function initSearch() {
@@ -39,6 +41,98 @@ function initSearch() {
 }
 initSearch();
 
+search_input.addEventListener('keyup', onSearch);
+
+function onSearch() {
+    console.log('search: ', this);
+    console.log('search value: ', this.value);
+    if (this.value.length <= 0) {
+    search_section.style.display = 'none';
+    document.body.style.overflow = `scroll`;
+    document.getElementById(`blur`).style.filter = `none`;
+        return;
+    }
+    search_section.style.display = 'flex';
+    document.body.style.overflow = `hidden`
+    document.getElementById(`blur`).style.filter = `blur(5px)`
+    search_section.innerHTML = "";
+    fetch(`/product/list?name_search=${this.value}`) 
+    .then (response => response.json())
+    .then (result => {
+        console.log('search res: ', result);
+
+        for(const key of result) {
+            const block_div = document.createElement('div');
+            block_div.className = 'block_div';
+            const bagroundImage_div = document.createElement('div');
+            bagroundImage_div.className = 'bagroundImage_div'
+            bagroundImage_div.style.backgroundImage = `url(${key.productUrl})`;
+            block_div.appendChild(bagroundImage_div);
+            //////
+            const info_div = document.createElement('div');
+            info_div.className = 'info_div';
+            const foodName = document.createElement('p');
+            foodName.innerText = key.productName;
+            const foodPrice = document.createElement('p');
+            foodPrice.innerText = key.productPrice;
+            ////
+            const add_food_btn = document.createElement('button');
+            add_food_btn.innerText = "Add to basket";
+            add_food_btn.className = "add_food_btn";
+            add_food_btn.setAttribute('data-prod-id', key.productId)
+            add_food_btn.addEventListener('click', add_to_basket);
+            ////
+            const plus_minus = document.createElement('div');
+            plus_minus.className = "plus_minus";
+            const plus = document.createElement('button');
+            plus.innerText = "+";
+            plus.id = "plus";
+            plus.addEventListener('click', () => {add_food_count.value++});
+            const minus = document.createElement('button');
+            minus.innerText = "-";
+            minus.id = "minus";
+            minus.addEventListener('click', () => { add_food_count.value > 0 ? add_food_count.value-- : 1 });
+            const add_food_count = document.createElement('input');
+            add_food_count.type = "number";
+            add_food_count.value = 0;
+            add_food_count.min = 1;
+            add_food_count.setAttribute('data-prod-count-id', key.productId)
+    
+            plus_minus.appendChild(add_food_btn);
+            plus_minus.appendChild(minus);
+            plus_minus.appendChild(add_food_count);
+            plus_minus.appendChild(plus);
+            ///////////////////////////
+            info_div.appendChild(foodName);
+            info_div.appendChild(foodPrice);
+            info_div.appendChild(plus_minus);
+            block_div.appendChild(info_div);
+
+            search_section.appendChild(block_div);
+    
+            // switch (key.productType) {
+            //     case "fast_food":
+
+            //         break;
+            //     case "hot-meals":
+            //         hotmeals_div.appendChild(block_div);
+            //         break;
+            //     case "sea-food":
+            //         seafood_div.appendChild(block_div);
+            //         break;
+            //     case "salades":
+            //         salades_div.appendChild(block_div);
+            //         break;
+            //     case "sweets":
+            //         sweets_div.appendChild(block_div);
+            //         break;
+            //     case "drinks":
+            //         drinks_div.appendChild(block_div);
+            //         break;
+            // }
+        }
+    })
+}
 
 ////////////////////////  menu visibility /////////////////////
 

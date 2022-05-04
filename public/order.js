@@ -69,6 +69,14 @@ function makeOrder(event) {
     .catch( error => {
         console.log('order create error: ', error);
     })
+
+    container.style.display = `none`;
+    order_section.style.display = `none`;
+    document.body.style.overflow = `scroll`;
+    document.getElementById(`blur`).style.filter = `none`;
+    phone.value = ``;
+    address.value = '';
+    alert("Thank you for your order");
 }
 
 export default orderComplete;

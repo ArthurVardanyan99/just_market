@@ -1,5 +1,7 @@
 import nodemailer from 'nodemailer';
-
+import multer from "multer";
+import path from "path";
+import fs from "fs";
 import {Request, Response} from "express"
 import {
   userCreate,
@@ -12,6 +14,9 @@ import {
   createEmailText,
 } from './db';
 
+const upload = multer({
+  dest: path.resolve(__dirname, "../public/tmp"),
+});
 
 let transport = nodemailer.createTransport({
   host: "smtp.gmail.com",
@@ -65,7 +70,8 @@ const routes = {
     try {
       console.log('product get data query: ', req.query);
       const type = req.query.type as string;
-      const products = await productGet({ type, id: undefined });
+      const name_search = req.query.name_search as string;
+      const products = await productGet({ type, id: undefined, name_search });
       res.json(products);
       // @ts-ignore
     } catch (error) {
@@ -80,7 +86,7 @@ const routes = {
       const id = Number(req.params.id)
 
       // const type = req.query.type as string;
-      const products = await productGet({ type: undefined, id });
+      const products = await productGet({ type: undefined, id, name_search: undefined });
       // @ts-ignore
       res.json(products[0]);
       // @ts-ignore
@@ -99,9 +105,9 @@ const routes = {
 
       const mailOptions = {
         from: 'justmarket11@gmail.com', // Sender address
-        to: 'arthurvardanyan044000@gmail.com', // List of recipients
+        to: 'justmarket11@gmail.com', // List of recipients
         subject: 'New Order', // Subject line
-        text: 'Hello People!, Welcome to Bacancy!', // Plain text body
+        text, // Plain text body
       };
 
       transport.sendMail(mailOptions, function(err, info) {

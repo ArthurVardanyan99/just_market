@@ -2,14 +2,14 @@ let search_but = document.getElementById(`search_but`)
 let close_search = document.getElementById(`close_search`)
 let search_input = document.getElementById(`search_input`)
 
-search_but.addEventListener(`click`,() => {
-    close_search.style.display = `inline`
-    search_input.style.display = `inline`
-})
-close_search.addEventListener(`click`, () => {
-    close_search.style.display = `none`
-    search_input.style.display = `none`
-})
+// search_but.addEventListener(`click`,() => {
+//     close_search.style.display = `inline`
+//     search_input.style.display = `inline`
+// })
+// close_search.addEventListener(`click`, () => {
+//     close_search.style.display = `none`
+//     search_input.style.display = `none`
+// })
 
 let prev = document.getElementById("prev");
 let next = document.getElementById("next");

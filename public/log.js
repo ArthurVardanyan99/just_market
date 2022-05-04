@@ -154,6 +154,10 @@ function my_account_click () {
                 document.body.style.overflow = `scroll`;
                 document.getElementById(`blur`).style.filter = `none`;
 
+                if (result.name === 'admin') {
+                    window.location = './admin.html'
+                }
+
             })
             .catch( error => {
                 console.log(error)

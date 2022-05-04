@@ -1,6 +1,7 @@
 import { sqlite3_db } from "./sqlite3";
 
 interface ProductGetArgs {
+    name_search: string | undefined,
     type: string | undefined;
     id: number | undefined;
 }
@@ -9,16 +10,17 @@ export const productGet = (args: ProductGetArgs) => {
     const {
         type,
         id,
+        name_search,
     } = args;
 
     return new Promise((resolve, reject) => {
-        console.log('db product create call', args);
+        console.log('db product get call', args);
 
         let sql_query = 'SELECT * FROM products'
 
         let query_conditions = []
 
-        if (type || id) {
+        if (type || id || name_search) {
             sql_query += ' Where '
         }
 
@@ -28,6 +30,10 @@ export const productGet = (args: ProductGetArgs) => {
 
         if (id) {
             query_conditions.push(` productId = ${id}`)
+        }
+
+        if (name_search) {
+            query_conditions.push(` productName LIKE '%${name_search}%'`)
         }
 
         if (query_conditions.length === 1) {

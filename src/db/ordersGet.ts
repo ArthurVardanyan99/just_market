@@ -52,8 +52,10 @@ export const ordersGet = (args: OrdersGetArgs): Promise<Order[]> => {
                         orderId: row.orderId,
                         userId: row.userId,
                         createDate: new Date(row.createDate),
-                        productIds: row.productIds.split(',').map((s: any) => Number(s)),
+                        productIds: JSON.parse(row.productIds) as {id: number, count: number}[],
                         completed: Boolean(row.completed),
+                        address: row.address,
+                        phone_number: row.phone_number,
                     }))
                     resolve(orders);
                 } else {
